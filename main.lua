@@ -1,15 +1,20 @@
+shack = require 'shack'
+
 function love.load()
   gameState = 1
   score = 0
+  shack:setDimensions(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 
   fonts = {}
   fonts.pixeled = love.graphics.newFont('assets/fonts/Pixeled.ttf', 20)
+  fonts.pixelDead = love.graphics.newFont('assets/fonts/pixelDead.ttf', 80)
 
   sprites = {}
   sprites.player = love.graphics.newImage('assets/sprites/player.png')
-  sprites.bullet = love.graphics.newImage('assets/sprites/bullet.png')
+  sprites.bullet = love.graphics.newImage('assets/sprites/football.png')
   sprites.zombie = love.graphics.newImage('assets/sprites/zombie.png')
   sprites.background = love.graphics.newImage('assets/sprites/background.png')
+  sprites.gameOver = love.graphics.newImage('assets/sprites/gameOver.png')
 
   player = {}
   player.x = love.graphics.getWidth()/2
@@ -27,26 +32,43 @@ end
 
 
 function love.draw()
+  shack:apply()
   love.graphics.draw(sprites.background, 0, 0)
+
   if gameState == 1 then
-    love.graphics.setFont(fonts.pixeled)
-    love.graphics.printf('"Click anywhere to begin!"', 0, 50, love.graphics.getWidth(), "center")
+    player.x = love.graphics.getWidth()/2
+    player.y = love.graphics.getHeight()/2
+    love.graphics.setFont(fonts.pixelDead)
+    love.graphics.printf('Zombie Killer', 0, 50, love.graphics.getWidth(), "center")
   end
 
+  if gameState == 3 then
+    love.graphics.setFont(fonts.pixelDead)
+    love.graphics.printf('Game Over!', 0, 50, love.graphics.getWidth(), "center")
+    love.graphics.setFont(fonts.pixeled)
+    love.graphics.printf('Click again to restart the game!', 0, 120, love.graphics.getWidth(), "center")
+    love.graphics.draw(sprites.gameOver, player.x, player.y)
+  end
+
+  love.graphics.setFont(fonts.pixelDead)
   love.graphics.printf('score: ' .. score, 0,  love.graphics.getHeight() - 100, love.graphics.getWidth(), 'center')
 
-  love.graphics.draw(sprites.player, player.x, player.y, playerOrientationAngle(), nil, nil, player.ox, player.oy)
+  if gameState ~= 3 then
+    love.graphics.draw(sprites.player, player.x, player.y, playerOrientationAngle(), nil, nil, player.ox, player.oy)
+  end
 
   for i,z in ipairs(zombies) do
     love.graphics.draw(sprites.zombie, z.x, z.y, zombieOrientationAngle(z), nil, nil, sprites.zombie:getWidth()/2, sprites.zombie:getHeight()/2)
   end
 
   for i,b in ipairs(bullets) do
-    love.graphics.draw(sprites.bullet, b.x, b.y, nil, 0.5, 0.5, sprites.bullet:getWidth()/2, sprites.bullet:getHeight()/2)
+    love.graphics.draw(sprites.bullet, b.x, b.y, b.direction, 0.07, 0.07, sprites.bullet:getWidth()/2, sprites.bullet:getHeight()/2)
   end
 end
 
 function love.update(dt)
+  shack:update(dt)
+
   if gameState == 2 then
     if love.keyboard.isDown("s") and player.y < love.graphics.getHeight() then
       player.y = player.y + player.speed * dt
@@ -75,9 +97,7 @@ function love.update(dt)
       for i,z in ipairs(zombies) do
         zombies[i] = nil
       end
-      gameState = 1
-      player.x = love.graphics.getWidth()/2
-      player.y = love.graphics.getHeight()/2
+      gameState = 3
     end
   end
 
@@ -102,6 +122,7 @@ function love.update(dt)
         z.dead = true
         b.killed = true
         score = score + 1
+        shack:setShake(20)
       end
     end
   end
@@ -140,7 +161,7 @@ function love.mousepressed( x, y, b, istouch)
   if b == 1 and gameState == 2 then
     spawnBullet()
   end
-  if gameState == 1 then
+  if gameState == 1 or gameState == 3 then
     gameState = 2
     maxTime = 2
     timer = maxTime
