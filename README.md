@@ -1,6 +1,6 @@
 # DeadZ0ne! :football:
 
-![Available on itch.io](http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png)](https://paulopacitti.itch.io/deadz0ne)
+[![Available on itch.io](http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png)](https://paulopacitti.itch.io/deadz0ne)
 
 - Game made with [Love2D](https://love2d.org/) and Lua :moon:
 - The game is about a quarterback that finds himself in the middle of a zombie apocalypse, so he kills zombies with footballs :football:
