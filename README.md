@@ -11,4 +11,4 @@
 
 ## Credits
 - [shack​](https://github.com/Ulydev/shack) library;
-- based on Kyle's course game, sprites assets are from this course;
+- based on [Kyle's course](https://www.udemy.com/course/lua-love/) game, sprites assets are from this course;
