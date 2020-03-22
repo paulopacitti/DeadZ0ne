@@ -1,15 +1,14 @@
-# Zombie Killer :video_game: :football:
+# DeadZ0ne! :football:
 
-- Game made with [Löve2D](https://love2d.org/) and Lua :moon:
+- Game made with [Love2D](https://love2d.org/) and Lua :moon:
 - The game is about a quarterback that finds himself in the middle of a zombie apocalypse, so he kills zombies with footballs :football:
 
-![](https://i.imgur.com/LLOizO9.png)
+![](https://i.imgur.com/A8C7aVA.gif)
 
 
 ## Running The Game
-- Clone the project
-- [Download](https://love2d.org/) the Löve package for your OS
-- Run Löve in the root folder :fire:
+- Just download it in the **itch.io**:
+[![Available on itch.io](http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png)](https://paulopacitti.itch.io/deadz0ne)
 
 ## Instructions
 - <kbd>W</kbd>, <kbd>A</kbd>, <kbd>S</kbd>, <kbd>D</kbd> to run :runner:

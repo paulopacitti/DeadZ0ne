@@ -3,6 +3,7 @@ shack = require 'shack'
 function love.load()
   gameState = 1
   score = 0
+  love.window.setTitle("DeadZ0ne!")
   shack:setDimensions(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 
   fonts = {}
@@ -39,19 +40,19 @@ function love.draw()
     player.x = love.graphics.getWidth()/2
     player.y = love.graphics.getHeight()/2
     love.graphics.setFont(fonts.pixelDead)
-    love.graphics.printf('Zombie Killer', 0, 50, love.graphics.getWidth(), "center")
+    love.graphics.printf('DeadZ0ne!', 0, 50, love.graphics.getWidth(), "center")
   end
 
   if gameState == 3 then
     love.graphics.setFont(fonts.pixelDead)
-    love.graphics.printf('Game Over!', 0, 50, love.graphics.getWidth(), "center")
+    love.graphics.printf('Game 0ver!', 0, 50, love.graphics.getWidth(), "center")
     love.graphics.setFont(fonts.pixeled)
     love.graphics.printf('Click again to restart the game!', 0, 120, love.graphics.getWidth(), "center")
     love.graphics.draw(sprites.gameOver, player.x, player.y)
   end
 
   love.graphics.setFont(fonts.pixelDead)
-  love.graphics.printf('score: ' .. score, 0,  love.graphics.getHeight() - 100, love.graphics.getWidth(), 'center')
+  love.graphics.printf('sc0re: ' .. score, 0,  love.graphics.getHeight() - 100, love.graphics.getWidth(), 'center')
 
   if gameState ~= 3 then
     love.graphics.draw(sprites.player, player.x, player.y, playerOrientationAngle(), nil, nil, player.ox, player.oy)
