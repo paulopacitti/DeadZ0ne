@@ -11,4 +11,5 @@
 
 ## Credits
 - [shack​](https://github.com/Ulydev/shack) library;
+- sound effects are from [freesound.org](https://freesound.org/);
 - based on [Kyle's course](https://www.udemy.com/course/lua-love/) game, sprites assets are from this course;

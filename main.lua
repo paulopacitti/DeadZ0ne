@@ -10,12 +10,19 @@ function love.load()
   fonts.pixeled = love.graphics.newFont('assets/fonts/Pixeled.ttf', 20)
   fonts.pixelDead = love.graphics.newFont('assets/fonts/pixelDead.ttf', 80)
 
+  sounds = {}
+  sounds.gameOver = love.audio.newSource('assets/sounds/no-scream.wav', 'static')
+  sounds.gameOver:setVolume(0.5)
+  sounds.swoosh = love.audio.newSource('assets/sounds/swoosh.wav', 'static')
+  sounds.swoosh:setVolume(0.75)
+  sounds.zombie1 = love.audio.newSource('assets/sounds/zombie-1.wav', 'static')
+
   sprites = {}
-  sprites.player = love.graphics.newImage('assets/sprites/player.png')
-  sprites.bullet = love.graphics.newImage('assets/sprites/football.png')
-  sprites.zombie = love.graphics.newImage('assets/sprites/zombie.png')
   sprites.background = love.graphics.newImage('assets/sprites/background.png')
-  sprites.gameOver = love.graphics.newImage('assets/sprites/gameOver.png')
+  sprites.bullet = love.graphics.newImage('assets/sprites/football.png')
+  sprites.player = love.graphics.newImage('assets/sprites/player.png')
+  sprites.transparentCover = love.graphics.newImage('assets/sprites/logo-transparent.png')
+  sprites.zombie = love.graphics.newImage('assets/sprites/zombie.png')
 
   player = {}
   player.x = love.graphics.getWidth()/2
@@ -39,22 +46,23 @@ function love.draw()
   if gameState == 1 then
     player.x = love.graphics.getWidth()/2
     player.y = love.graphics.getHeight()/2
-    love.graphics.setFont(fonts.pixelDead)
-    love.graphics.printf('DeadZ0ne!', 0, 50, love.graphics.getWidth(), "center")
+    love.graphics.setFont(fonts.pixeled)
+    love.graphics.printf('Click anywhere to start the game!', 0, love.graphics.getHeight() - 100, love.graphics.getWidth(), "center")
+    love.graphics.draw(sprites.transparentCover, love.graphics.getWidth()/2, love.graphics.getHeight()/2, 0, nil, nil, 325, 250)
   end
 
   if gameState == 3 then
     love.graphics.setFont(fonts.pixelDead)
+    love.graphics.printf('sc0re: ' .. score, 0,  love.graphics.getHeight() - 100, love.graphics.getWidth(), 'center')
+    love.graphics.setFont(fonts.pixelDead)
     love.graphics.printf('Game 0ver!', 0, 50, love.graphics.getWidth(), "center")
     love.graphics.setFont(fonts.pixeled)
     love.graphics.printf('Click again to restart the game!', 0, 120, love.graphics.getWidth(), "center")
-    love.graphics.draw(sprites.gameOver, player.x, player.y)
   end
 
-  love.graphics.setFont(fonts.pixelDead)
-  love.graphics.printf('sc0re: ' .. score, 0,  love.graphics.getHeight() - 100, love.graphics.getWidth(), 'center')
-
-  if gameState ~= 3 then
+  if gameState == 2 then
+    love.graphics.setFont(fonts.pixelDead)
+    love.graphics.printf('sc0re: ' .. score, 0,  love.graphics.getHeight() - 100, love.graphics.getWidth(), 'center')
     love.graphics.draw(sprites.player, player.x, player.y, playerOrientationAngle(), nil, nil, player.ox, player.oy)
   end
 
@@ -98,6 +106,8 @@ function love.update(dt)
       for i,z in ipairs(zombies) do
         zombies[i] = nil
       end
+      sounds.gameOver:play()
+      shack:setShake(20)
       gameState = 3
     end
   end
@@ -120,6 +130,9 @@ function love.update(dt)
   for i,z in ipairs(zombies) do
     for j,b in ipairs(bullets) do
       if distanceBetween(z.x, z.y, b.x, b.y) < 20 then
+        sounds.zombie1:stop()
+        sounds.zombie1:setPitch(1 + 0.5*love.math.random())
+        sounds.zombie1:play()
         z.dead = true
         b.killed = true
         score = score + 1
@@ -160,9 +173,13 @@ end
 
 function love.mousepressed( x, y, b, istouch)
   if b == 1 and gameState == 2 then
+    sounds.swoosh:stop()
+    sounds.swoosh:setPitch(1 - 0.2*love.math.random())
+    sounds.swoosh:play()
     spawnBullet()
   end
   if gameState == 1 or gameState == 3 then
+    sounds.gameOver:stop()
     gameState = 2
     maxTime = 2
     timer = maxTime
