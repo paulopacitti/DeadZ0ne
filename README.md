@@ -8,3 +8,7 @@
 ## Instructions
 - <kbd>W</kbd>, <kbd>A</kbd>, <kbd>S</kbd>, <kbd>D</kbd> to run :runner:
 - Right Click to shoot :football:
+
+## Credits
+- [shack​](https://github.com/Ulydev/shack) library;
+- based on Kyle's course game, sprites assets are from this course;
