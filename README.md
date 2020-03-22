@@ -5,9 +5,6 @@
 
 ![](https://i.imgur.com/A8C7aVA.gif)
 
-
-## Running The Game
-- Just download it in the **itch.io**:
 [![Available on itch.io](http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png)](https://paulopacitti.itch.io/deadz0ne)
 
 ## Instructions
