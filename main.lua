@@ -6,11 +6,17 @@ function love.load()
   love.window.setTitle("DeadZ0ne!")
   shack:setDimensions(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 
+  cursor = love.mouse.newCursor('assets/sprites/cursor4.png', 20, 20)
+  love.mouse.setCursor(cursor)
+
   fonts = {}
   fonts.pixeled = love.graphics.newFont('assets/fonts/Pixeled.ttf', 20)
   fonts.pixelDead = love.graphics.newFont('assets/fonts/pixelDead.ttf', 80)
 
   sounds = {}
+  sounds.music = love.audio.newSource('assets/sounds/always_f0cused.wav', 'static')
+  sounds.music:setLooping(true)
+  sounds.music:setVolume(0.7)
   sounds.gameOver = love.audio.newSource('assets/sounds/no-scream.wav', 'static')
   sounds.gameOver:setVolume(0.5)
   sounds.swoosh = love.audio.newSource('assets/sounds/swoosh.wav', 'static')
@@ -61,6 +67,7 @@ function love.draw()
   end
 
   if gameState == 2 then
+    sounds.music:play()
     love.graphics.setFont(fonts.pixelDead)
     love.graphics.printf('sc0re: ' .. score, 0,  love.graphics.getHeight() - 100, love.graphics.getWidth(), 'center')
     love.graphics.draw(sprites.player, player.x, player.y, playerOrientationAngle(), nil, nil, player.ox, player.oy)
