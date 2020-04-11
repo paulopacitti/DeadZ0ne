@@ -7,7 +7,6 @@ function love.load()
   shack:setDimensions(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 
   cursor = love.mouse.newCursor('assets/sprites/cursor4.png', 20, 20)
-  love.mouse.setCursor(cursor)
 
   fonts = {}
   fonts.pixeled = love.graphics.newFont('assets/fonts/Pixeled.ttf', 20)
@@ -24,11 +23,11 @@ function love.load()
   sounds.zombie1 = love.audio.newSource('assets/sounds/zombie-1.wav', 'static')
 
   sprites = {}
-  sprites.background = love.graphics.newImage('assets/sprites/background.png')
-  sprites.bullet = love.graphics.newImage('assets/sprites/football.png')
-  sprites.player = love.graphics.newImage('assets/sprites/player.png')
-  sprites.transparentCover = love.graphics.newImage('assets/sprites/logo-transparent.png')
-  sprites.zombie = love.graphics.newImage('assets/sprites/zombie.png')
+  sprites.background = love.graphics.newImage('assets/sprites/background2.png')
+  sprites.bullet = love.graphics.newImage('assets/sprites/football3.png')
+  sprites.player = love.graphics.newImage('assets/sprites/player3.png')
+  sprites.transparentCover = love.graphics.newImage('assets/sprites/logo-transparent2.png')
+  sprites.zombie = love.graphics.newImage('assets/sprites/zombie3.png')
 
   player = {}
   player.x = love.graphics.getWidth()/2
@@ -48,6 +47,7 @@ end
 function love.draw()
   shack:apply()
   love.graphics.draw(sprites.background, 0, 0)
+  love.mouse.setCursor(cursor)
 
   if gameState == 1 then
     player.x = love.graphics.getWidth()/2
